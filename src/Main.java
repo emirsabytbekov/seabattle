@@ -231,11 +231,159 @@ public class Main {
                         }
                         if (twoSquareShips == 2) break createTwoSquareShipsLoop;
 
+                        if (shipLength < 2) {
+                            privateField[i][j] = 0;
+                        }
+
                     }
                 }
             }
         }
 
+
+        createThreeSquareShipLoop:
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 7; j++) {
+
+                if (privateField[i][j] == 0) {
+                    privateField[i][j] = rand.nextInt(2);
+
+                    if (privateField[i][j] == 1) {
+
+                        if (j > 1) {
+                            if (privateField[i][j-1] == 0 && privateField[i][j-2] == 0) {
+
+                                int element = rand.nextInt(2);
+                                privateField[i][j-1] = element;
+                                privateField[i][j-2] = element;
+
+                                if (privateField[i][j-2] == 1) {
+                                    threeSquareShips++;
+
+                                    if (i > 0 && j > 2) privateField[i-1][j-3] = 2;
+                                    if (i > 0) {
+                                        privateField[i-1][j-2] = 2;
+                                        privateField[i-1][j-1] = 2;
+                                        privateField[i-1][j] = 2;
+                                    }
+                                    if (i > 0 && j < 6) privateField[i-1][j+1] = 2;
+                                    if (j < 6)          privateField[i][j+1] = 2;
+                                    if (i < 6 && j < 6) privateField[i+1][j+1] = 2;
+                                    if (i < 6) {
+                                        privateField[i+1][j] = 2;
+                                        privateField[i+1][j-1] = 2;
+                                        privateField[i+1][j-2] = 2;
+                                    }
+                                    if (i < 6 && j > 2) privateField[i+1][j-3] = 2;
+                                    if (j > 2)          privateField[i][j-3] = 2;
+
+                                }
+
+                            }
+                        }
+
+                        if (threeSquareShips == 1) break createThreeSquareShipLoop;
+
+                        if (i > 1) {
+                            if (privateField[i-1][j] == 0 && privateField[i-2][j] == 0) {
+
+                                int element = rand.nextInt(2);
+                                privateField[i-1][j] = element;
+                                privateField[i-2][j] = element;
+
+                                if (privateField[i-2][j] == 1) {
+                                    threeSquareShips++;
+
+                                    if (i > 2 && j > 0) privateField[i-3][j-1] = 2;
+                                    if (i > 2)          privateField[i-3][j] = 2;
+                                    if (i > 2 && j < 6) privateField[i-3][j+1] = 2;
+                                    if (j < 6) {
+                                        privateField[i-2][j+1] = 2;
+                                        privateField[i-1][j+1] = 2;
+                                        privateField[i][j+1] = 2;
+                                    }
+                                    if (i < 6 && j < 6) privateField[i+1][j+1] = 2;
+                                    if (i < 6)          privateField[i+1][j] = 2;
+                                    if (i < 6 && j > 0) privateField[i+1][j-1] = 2;
+                                    if (j > 0) {
+                                        privateField[i][j-1] = 2;
+                                        privateField[i-1][j-1] = 2;
+                                        privateField[i-2][j-1] = 2;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (threeSquareShips == 1) break createThreeSquareShipLoop;
+
+                        if (j < 5) {
+                            if (privateField[i][j+1] == 0 && privateField[i][j+2] == 0) {
+
+                                int element = rand.nextInt(2);
+                                privateField[i][j+1] = element;
+                                privateField[i][j+2] = element;
+
+                                if (privateField[i][j+2] == 1) {
+                                    threeSquareShips++;
+
+                                    if (i > 0 && j > 0) privateField[i-1][j-1] = 2;
+                                    if (i > 0) {
+                                        privateField[i-1][j] = 2;
+                                        privateField[i-1][j+1] = 2;
+                                        privateField[i-1][j+2] = 2;
+                                    }
+                                    if (i > 0 && j < 4) privateField[i-1][j+3] = 2;
+                                    if (j < 4)          privateField[i][j+3] = 2;
+                                    if (i < 6 && j < 4) privateField[i+1][j+3] = 2;
+                                    if (i < 6) {
+                                        privateField[i+1][j+2] = 2;
+                                        privateField[i+1][j+1] = 2;
+                                        privateField[i+1][j] = 2;
+                                    }
+                                    if (i < 6 && j > 0) privateField[i+1][j-1] = 2;
+                                    if (j > 0)          privateField[i][j-1] = 2;
+                                }
+                            }
+                        }
+
+                        if (threeSquareShips == 1) break createThreeSquareShipLoop;
+
+                        if (i < 5) {
+                            if (privateField[i+1][j] == 0 && privateField[i+2][j] == 0) {
+
+                                int element = rand.nextInt(2);
+                                privateField[i+1][j] = element;
+                                privateField[i+2][j] = element;
+
+                                if (privateField[i+2][j] == 1) {
+                                    threeSquareShips++;
+
+                                    if (i > 0 && j > 0) privateField[i-1][j-1] = 2;
+                                    if (i > 0)          privateField[i-1][j] = 2;
+                                    if (i > 0 && j < 6) privateField[i-1][j+1] = 2;
+                                    if (j < 6) {
+                                        privateField[i][j+1] = 2;
+                                        privateField[i+1][j+1] = 2;
+                                        privateField[i+2][j+1] = 2;
+                                    }
+                                    if (i < 4 && j < 6) privateField[i+3][j+1] = 2;
+                                    if (i < 4)          privateField[i+3][j] = 2;
+                                    if (i < 4 && j > 0) privateField[i+3][j-1] = 2;
+                                    if (j > 0) {
+                                        privateField[i+2][j-1] = 2;
+                                        privateField[i+1][j-1] = 2;
+                                        privateField[i][j-1] = 2;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (threeSquareShips == 1) break createThreeSquareShipLoop;
+
+                    }
+                }
+            }
+        }
 
 
 
