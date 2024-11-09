@@ -136,7 +136,7 @@ public class Main {
 //                    else if (hiddenField[i+1][j] == 1) hiddenField[i][j] = 0;
 //                }
 
-                if (hiddenField[i][j] != 2) {
+                if (hiddenField[i][j] == 0) {
                     hiddenField[i][j] = rand.nextInt(2);
 
                     if (hiddenField[i][j] == 1) {
@@ -157,6 +157,119 @@ public class Main {
                     }
                 }
 
+            }
+        }
+
+        createTwoSquareShipsLoop:
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 7; j++) {
+                if (hiddenField[i][j] == 0) {
+                    hiddenField[i][j] = rand.nextInt(2);
+
+                    if (hiddenField[i][j] == 1) {
+                        int shipLength = 1;
+
+                        if (twoSquareShips == 2) break createTwoSquareShipsLoop;
+
+                        if (j > 0) {
+                            if (hiddenField[i][j-1] == 0) {
+                                hiddenField[i][j-1] = rand.nextInt(2);
+                                if (hiddenField[i][j-1] == 1) {
+                                    shipLength++;
+                                    twoSquareShips++;
+
+                                    if (i > 0 && j > 1) hiddenField[i-1][j-2] = 2;
+                                    if (i > 0 && j > 0) hiddenField[i-1][j-1] = 2;
+                                    if (i > 0)          hiddenField[i-1][j] = 2;
+                                    if (i > 0 && j < 6) hiddenField[i-1][j+1] = 2;
+                                    if (j < 6)          hiddenField[i][j+1] = 2;
+                                    if (i < 6 && j < 6) hiddenField[i+1][j+1] = 2;
+                                    if (i < 6)          hiddenField[i+1][j] = 2;
+                                    if (i < 6 && j > 0) hiddenField[i+1][j-1] = 2;
+                                    if (i < 6 && j > 1) hiddenField[i+1][j-2] = 2;
+                                    if (j > 1)          hiddenField[i][j-2] = 2;
+                                }
+                            }
+                        }
+
+                        if (twoSquareShips == 2) break createTwoSquareShipsLoop;
+
+                        if (shipLength < 2) {
+                            if (i > 0) {
+                                if (hiddenField[i-1][j] == 0) {
+                                    hiddenField[i-1][j] = rand.nextInt(2);
+                                    if (hiddenField[i-1][j] == 1) {
+                                        shipLength++;
+                                        twoSquareShips++;
+
+                                        if (i > 1 && j > 0) hiddenField[i-2][j-1] = 2;
+                                        if (i > 1)          hiddenField[i-2][j] = 2;
+                                        if (i > 1 && j < 6) hiddenField[i-2][j+1] = 2;
+                                        if (j < 6)          hiddenField[i-1][j+1] = 2;
+                                        if (j < 6)          hiddenField[i][j+1] = 2;
+                                        if (i < 6 && j < 6) hiddenField[i+1][j+1] = 2;
+                                        if (i < 6)          hiddenField[i+1][j] = 2;
+                                        if (i < 6 && j > 0) hiddenField[i+1][j-1] = 2;
+                                        if (j > 0)          hiddenField[i][j-1] = 2;
+                                        if (i > 0 && j > 0) hiddenField[i-1][j-1] = 2;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (twoSquareShips == 2) break createTwoSquareShipsLoop;
+
+                        if (shipLength < 2) {
+                            if (j < 6) {
+                                if (hiddenField[i][j+1] == 0) {
+                                    hiddenField[i][j+1] = rand.nextInt(2);
+                                    if (hiddenField[i][j+1] == 1) {
+                                        shipLength++;
+                                        twoSquareShips++;
+
+                                        if (i > 0 && j > 0) hiddenField[i-1][j-1] = 2;
+                                        if (i > 0)          hiddenField[i-1][j] = 2;
+                                        if (i > 0)          hiddenField[i-1][j+1] = 2;
+                                        if (i > 0 && j < 5) hiddenField[i-1][j+2] = 2;
+                                        if (j < 5)          hiddenField[i][j+2] = 2;
+                                        if (i < 6 && j < 5) hiddenField[i+1][j+2] = 2;
+                                        if (i < 6)          hiddenField[i+1][j+1] = 2;
+                                        if (i < 6)          hiddenField[i+1][j] = 2;
+                                        if (i < 6 && j > 0) hiddenField[i+1][j-1] = 2;
+                                        if (j > 0)          hiddenField[i][j-1] = 2;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (twoSquareShips == 2) break createTwoSquareShipsLoop;
+
+                        if (shipLength < 2) {
+                            if (i < 6) {
+                                if (hiddenField[i+1][j] == 0) {
+                                    hiddenField[i+1][j] = rand.nextInt(2);
+                                    if (hiddenField[i+1][j] == 1) {
+                                        shipLength++;
+                                        twoSquareShips++;
+
+                                        if (i > 0 && j > 0) hiddenField[i-1][j-1] = 2;
+                                        if (i > 0)          hiddenField[i-1][j] = 2;
+                                        if (i > 0 && j < 6) hiddenField[i-1][j+1] = 2;
+                                        if (j < 6)          hiddenField[i][j+1] = 2;
+                                        if (j < 6)          hiddenField[i+1][j+1] = 2;
+                                        if (i < 5 && j < 6) hiddenField[i+2][j+1] = 2;
+                                        if (i < 5)          hiddenField[i+2][j] = 2;
+                                        if (i < 5 && j > 0) hiddenField[i+2][j-1] = 2;
+                                        if (j > 0)          hiddenField[i+1][j-1] = 2;
+                                        if (j > 0)          hiddenField[i][j-1] = 2;
+                                    }
+                                }
+                            }
+                        }
+                        if (twoSquareShips == 2) break createTwoSquareShipsLoop;
+
+                    }
+                }
             }
         }
 
