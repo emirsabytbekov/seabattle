@@ -12,85 +12,26 @@ public class Main {
         int twoSquareShips = 0;
         int threeSquareShips = 0;
 
-//        createOneSquareShipsLoop:
-//        for (int i = 0; i < 7; i++) {
-//            for (int j = 0; j < 7; j++) {
-//                if ( (j > 0 && privateField[i][j-1] == 1) || (i > 0 && ((j > 0 && privateField[i-1][j-1] == 1) || privateField[i-1][j] == 1 || (j<6 && privateField[i-1][j+1] == 1) ) ) ) {
-//                    privateField[i][j] = 0;
-//                }
-//                else privateField[i][j] = rand.nextInt(2);
-//
-//                if (privateField[i][j] == 1) {
-//                    oneSquareShips++;
-//                }
-//
-//                if (oneSquareShips == 4) break createOneSquareShipsLoop;
-//            }
-//        }
+        createOneSquareShips(privateField, rand, oneSquareShips);
 
-//        createTwoSquareShipsLoop:
-//        for (int i = 0; i < 7; i++) {
-//            for (int j = 0; j < 7; j++) {
-//
-//                if ( (j > 0 && privateField[i][j-1] == 1) || (i > 0 && ((j > 0 && privateField[i-1][j-1] == 1) || privateField[i-1][j] == 1 || (j < 6 && privateField[i-1][j+1] == 1) ) ) )
-//                {
-//                    privateField[i][j] = 0;
-//                }
-//
-//                else
-//                {
-//                    privateField[i][j] = rand.nextInt(2);
-//                    if (privateField[i][j] == 1) {
-//
-//                        if ( (j > 1 && privateField[i][j-2] == 1) || (i > 0 && j > 1 && privateField[i-1][j-2] == 0) )
-//                        {
-//                            privateField[i][j] = 0;
-//                        }
-//                        else
-//                        {
-//                            privateField[i][j-1] = rand.nextInt(2);
-//
-//                            if (privateField[i][j-1] == 1) {
-//                                twoSquareShips++;
-//                                if (twoSquareShips == 2) break createTwoSquareShipsLoop;
-//                            }
-//                        }
-//
-//                        if ((i > 1 && j > 0 && privateField[i-2][j-1] == 1) && (privateField[i-2][j] == 0) && (j < 6 && privateField[i-2][j+1] == 0)  )
-//                        {
-//                            privateField[i-1][j] = rand.nextInt(2);
-//
-//                            if (privateField[i-1][j] == 1) {
-//                                twoSquareShips++;
-//                                if (twoSquareShips == 2) break createTwoSquareShipsLoop;
-//                            }
-//                        }
-//                        else if (j < 6 && (i > 0 && j < 5 && privateField[i-1][j+2] == 0))
-//                        {
-//                            privateField[i][j+1] = rand.nextInt(2);
-//
-//                            if (privateField[i][j+1] == 1) {
-//                                twoSquareShips++;
-//                                if (twoSquareShips == 2) break createTwoSquareShipsLoop;
-//                            }
-//                        }
-//                        else if (i < 6) {
-//                            privateField[i+1][j] = rand.nextInt(2);
-//
-//                            if (privateField[i+1][j] == 1) {
-//                                twoSquareShips++;
-//                                if (twoSquareShips == 2) break createTwoSquareShipsLoop;
-//                            }
-//                        }
-//                        else {
-//                            privateField[i][j] = 0;
-//                        }
-//                    }
-//                }
-//
-//            }
-//        }
+        createTwoSquareShips(privateField, rand, twoSquareShips);
 
+        createThreeSquareShip(privateField, rand, threeSquareShips);
+
+
+
+
+
+
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 7; j++) {
+                System.out.print(privateField[i][j] + "  ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void createOneSquareShips (int[][] privateField, Random rand, int oneSquareShips) {
 
         createOneSquareShipsLoop:
         for (int i = 0; i < 7; i++) {
@@ -119,7 +60,12 @@ public class Main {
 
             }
         }
+    }
 
+
+
+
+    public static void createTwoSquareShips (int[][] privateField, Random rand, int twoSquareShips) {
         createTwoSquareShipsLoop:
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 7; j++) {
@@ -239,8 +185,12 @@ public class Main {
                 }
             }
         }
+    }
 
 
+
+
+    public static void createThreeSquareShip (int[][] privateField, Random rand, int threeSquareShips) {
         createThreeSquareShipLoop:
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 7; j++) {
@@ -383,15 +333,6 @@ public class Main {
                     }
                 }
             }
-        }
-
-
-
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 7; j++) {
-                System.out.print(privateField[i][j] + "  ");
-            }
-            System.out.println();
         }
     }
 }
