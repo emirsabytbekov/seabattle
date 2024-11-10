@@ -8,16 +8,28 @@ public class Main {
         int[][] visibleField = new int[7][7];
         int[][] privateField = new int[7][7];
 
+        String [][] designedPrivateField = new String[7][7];
+
         int oneSquareShips = 0;
         int twoSquareShips = 0;
         int threeSquareShips = 0;
 
         randomlySpawnShips(rand, privateField, oneSquareShips, twoSquareShips, threeSquareShips);
 
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 7; j++) {
+                if (privateField[i][j] == 1) {
+                    designedPrivateField[i][j] = "\u26f5";
+                }
+                else {
+                    designedPrivateField[i][j] = "\ud83c\udf0a";
+                }
+            }
+        }
 
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 7; j++) {
-                System.out.print(privateField[i][j] + "  ");
+                System.out.print(designedPrivateField[i][j]);
             }
             System.out.println();
         }
