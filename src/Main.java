@@ -12,15 +12,7 @@ public class Main {
         int twoSquareShips = 0;
         int threeSquareShips = 0;
 
-        createOneSquareShips(privateField, rand, oneSquareShips);
-
-        createTwoSquareShips(privateField, rand, twoSquareShips);
-
-        createThreeSquareShip(privateField, rand, threeSquareShips);
-
-
-
-
+        randomlySpawnShips(rand, privateField, oneSquareShips, twoSquareShips, threeSquareShips);
 
 
         for (int i = 0; i < 7; i++) {
@@ -31,26 +23,26 @@ public class Main {
         }
     }
 
-    public static void createOneSquareShips (int[][] privateField, Random rand, int oneSquareShips) {
+    public static void spawnOneSquareShips(int[][] privateField, Random rand, int oneSquareShips) {
 
         createOneSquareShipsLoop:
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 7; j++) {
+        for (int column = 0; column < 7; column++) {
+            for (int row = 0; row < 7; row++) {
 
-                if (privateField[i][j] == 0) {
-                    privateField[i][j] = rand.nextInt(2);
+                if (privateField[column][row] == 0) {
+                    privateField[column][row] = rand.nextInt(2);
 
-                    if (privateField[i][j] == 1) {
+                    if (privateField[column][row] == 1) {
                         oneSquareShips++;
 
-                        if (i > 0 && j > 0) privateField[i-1][j-1] = 2;
-                        if (i > 0)          privateField[i-1][j] = 2;
-                        if (i > 0 && j < 6) privateField[i-1][j+1] = 2;
-                        if (j < 6)          privateField[i][j+1] = 2;
-                        if (i < 6 && j < 6) privateField[i+1][j+1] = 2;
-                        if (i < 6)          privateField[i+1][j] = 2;
-                        if (i < 6 && j > 0) privateField[i+1][j-1] = 2;
-                        if (j > 0)          privateField[i][j-1] = 2;
+                        if (column > 0 && row > 0) privateField[column -1][row -1] = 2;
+                        if (column > 0)          privateField[column -1][row] = 2;
+                        if (column > 0 && row < 6) privateField[column -1][row +1] = 2;
+                        if (row < 6)          privateField[column][row +1] = 2;
+                        if (column < 6 && row < 6) privateField[column +1][row +1] = 2;
+                        if (column < 6)          privateField[column +1][row] = 2;
+                        if (column < 6 && row > 0) privateField[column +1][row -1] = 2;
+                        if (row > 0)          privateField[column][row -1] = 2;
                     }
 
                     if (oneSquareShips == 4) {
@@ -65,35 +57,35 @@ public class Main {
 
 
 
-    public static void createTwoSquareShips (int[][] privateField, Random rand, int twoSquareShips) {
+    public static void spawnTwoSquareShips(int[][] privateField, Random rand, int twoSquareShips) {
         createTwoSquareShipsLoop:
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 7; j++) {
+        for (int column = 0; column < 7; column++) {
+            for (int row = 0; row < 7; row++) {
 
-                if (privateField[i][j] == 0) {
-                    privateField[i][j] = rand.nextInt(2);
+                if (privateField[column][row] == 0) {
+                    privateField[column][row] = rand.nextInt(2);
 
-                    if (privateField[i][j] == 1) {
+                    if (privateField[column][row] == 1) {
                         int shipLength = 1;
 
-                        if (j > 0) {
-                            if (privateField[i][j-1] == 0) {
-                                privateField[i][j-1] = rand.nextInt(2);
+                        if (row > 0) {
+                            if (privateField[column][row -1] == 0) {
+                                privateField[column][row -1] = rand.nextInt(2);
 
-                                if (privateField[i][j-1] == 1) {
+                                if (privateField[column][row -1] == 1) {
                                     shipLength++;
                                     twoSquareShips++;
 
-                                    if (i > 0 && j > 1) privateField[i-1][j-2] = 2;
-                                    if (i > 0)          privateField[i-1][j-1] = 2;
-                                    if (i > 0)          privateField[i-1][j] = 2;
-                                    if (i > 0 && j < 6) privateField[i-1][j+1] = 2;
-                                    if (j < 6)          privateField[i][j+1] = 2;
-                                    if (i < 6 && j < 6) privateField[i+1][j+1] = 2;
-                                    if (i < 6)          privateField[i+1][j] = 2;
-                                    if (i < 6)          privateField[i+1][j-1] = 2;
-                                    if (i < 6 && j > 1) privateField[i+1][j-2] = 2;
-                                    if (j > 1)          privateField[i][j-2] = 2;
+                                    if (column > 0 && row > 1) privateField[column -1][row -2] = 2;
+                                    if (column > 0)          privateField[column -1][row -1] = 2;
+                                    if (column > 0)          privateField[column -1][row] = 2;
+                                    if (column > 0 && row < 6) privateField[column -1][row +1] = 2;
+                                    if (row < 6)          privateField[column][row +1] = 2;
+                                    if (column < 6 && row < 6) privateField[column +1][row +1] = 2;
+                                    if (column < 6)          privateField[column +1][row] = 2;
+                                    if (column < 6)          privateField[column +1][row -1] = 2;
+                                    if (column < 6 && row > 1) privateField[column +1][row -2] = 2;
+                                    if (row > 1)          privateField[column][row -2] = 2;
                                 }
                             }
                         }
@@ -101,24 +93,24 @@ public class Main {
                         if (twoSquareShips == 2) break createTwoSquareShipsLoop;
 
                         if (shipLength < 2) {
-                            if (i > 0) {
-                                if (privateField[i-1][j] == 0) {
-                                    privateField[i-1][j] = rand.nextInt(2);
+                            if (column > 0) {
+                                if (privateField[column -1][row] == 0) {
+                                    privateField[column -1][row] = rand.nextInt(2);
 
-                                    if (privateField[i-1][j] == 1) {
+                                    if (privateField[column -1][row] == 1) {
                                         shipLength++;
                                         twoSquareShips++;
 
-                                        if (i > 1 && j > 0) privateField[i-2][j-1] = 2;
-                                        if (i > 1)          privateField[i-2][j] = 2;
-                                        if (i > 1 && j < 6) privateField[i-2][j+1] = 2;
-                                        if (j < 6)          privateField[i-1][j+1] = 2;
-                                        if (j < 6)          privateField[i][j+1] = 2;
-                                        if (i < 6 && j < 6) privateField[i+1][j+1] = 2;
-                                        if (i < 6)          privateField[i+1][j] = 2;
-                                        if (i < 6 && j > 0) privateField[i+1][j-1] = 2;
-                                        if (j > 0)          privateField[i][j-1] = 2;
-                                        if (j > 0)          privateField[i-1][j-1] = 2;
+                                        if (column > 1 && row > 0) privateField[column -2][row -1] = 2;
+                                        if (column > 1)          privateField[column -2][row] = 2;
+                                        if (column > 1 && row < 6) privateField[column -2][row +1] = 2;
+                                        if (row < 6)          privateField[column -1][row +1] = 2;
+                                        if (row < 6)          privateField[column][row +1] = 2;
+                                        if (column < 6 && row < 6) privateField[column +1][row +1] = 2;
+                                        if (column < 6)          privateField[column +1][row] = 2;
+                                        if (column < 6 && row > 0) privateField[column +1][row -1] = 2;
+                                        if (row > 0)          privateField[column][row -1] = 2;
+                                        if (row > 0)          privateField[column -1][row -1] = 2;
                                     }
                                 }
                             }
@@ -127,24 +119,24 @@ public class Main {
                         if (twoSquareShips == 2) break createTwoSquareShipsLoop;
 
                         if (shipLength < 2) {
-                            if (j < 6) {
-                                if (privateField[i][j+1] == 0) {
-                                    privateField[i][j+1] = rand.nextInt(2);
+                            if (row < 6) {
+                                if (privateField[column][row +1] == 0) {
+                                    privateField[column][row +1] = rand.nextInt(2);
 
-                                    if (privateField[i][j+1] == 1) {
+                                    if (privateField[column][row +1] == 1) {
                                         shipLength++;
                                         twoSquareShips++;
 
-                                        if (i > 0 && j > 0) privateField[i-1][j-1] = 2;
-                                        if (i > 0)          privateField[i-1][j] = 2;
-                                        if (i > 0)          privateField[i-1][j+1] = 2;
-                                        if (i > 0 && j < 5) privateField[i-1][j+2] = 2;
-                                        if (j < 5)          privateField[i][j+2] = 2;
-                                        if (i < 6 && j < 5) privateField[i+1][j+2] = 2;
-                                        if (i < 6)          privateField[i+1][j+1] = 2;
-                                        if (i < 6)          privateField[i+1][j] = 2;
-                                        if (i < 6 && j > 0) privateField[i+1][j-1] = 2;
-                                        if (j > 0)          privateField[i][j-1] = 2;
+                                        if (column > 0 && row > 0) privateField[column -1][row -1] = 2;
+                                        if (column > 0)          privateField[column -1][row] = 2;
+                                        if (column > 0)          privateField[column -1][row +1] = 2;
+                                        if (column > 0 && row < 5) privateField[column -1][row +2] = 2;
+                                        if (row < 5)          privateField[column][row +2] = 2;
+                                        if (column < 6 && row < 5) privateField[column +1][row +2] = 2;
+                                        if (column < 6)          privateField[column +1][row +1] = 2;
+                                        if (column < 6)          privateField[column +1][row] = 2;
+                                        if (column < 6 && row > 0) privateField[column +1][row -1] = 2;
+                                        if (row > 0)          privateField[column][row -1] = 2;
                                     }
                                 }
                             }
@@ -153,24 +145,24 @@ public class Main {
                         if (twoSquareShips == 2) break createTwoSquareShipsLoop;
 
                         if (shipLength < 2) {
-                            if (i < 6) {
-                                if (privateField[i+1][j] == 0) {
-                                    privateField[i+1][j] = rand.nextInt(2);
+                            if (column < 6) {
+                                if (privateField[column +1][row] == 0) {
+                                    privateField[column +1][row] = rand.nextInt(2);
 
-                                    if (privateField[i+1][j] == 1) {
+                                    if (privateField[column +1][row] == 1) {
                                         shipLength++;
                                         twoSquareShips++;
 
-                                        if (i > 0 && j > 0) privateField[i-1][j-1] = 2;
-                                        if (i > 0)          privateField[i-1][j] = 2;
-                                        if (i > 0 && j < 6) privateField[i-1][j+1] = 2;
-                                        if (j < 6)          privateField[i][j+1] = 2;
-                                        if (j < 6)          privateField[i+1][j+1] = 2;
-                                        if (i < 5 && j < 6) privateField[i+2][j+1] = 2;
-                                        if (i < 5)          privateField[i+2][j] = 2;
-                                        if (i < 5 && j > 0) privateField[i+2][j-1] = 2;
-                                        if (j > 0)          privateField[i+1][j-1] = 2;
-                                        if (j > 0)          privateField[i][j-1] = 2;
+                                        if (column > 0 && row > 0) privateField[column -1][row -1] = 2;
+                                        if (column > 0)          privateField[column -1][row] = 2;
+                                        if (column > 0 && row < 6) privateField[column -1][row +1] = 2;
+                                        if (row < 6)          privateField[column][row +1] = 2;
+                                        if (row < 6)          privateField[column +1][row +1] = 2;
+                                        if (column < 5 && row < 6) privateField[column +2][row +1] = 2;
+                                        if (column < 5)          privateField[column +2][row] = 2;
+                                        if (column < 5 && row > 0) privateField[column +2][row -1] = 2;
+                                        if (row > 0)          privateField[column +1][row -1] = 2;
+                                        if (row > 0)          privateField[column][row -1] = 2;
                                     }
                                 }
                             }
@@ -178,7 +170,7 @@ public class Main {
                         if (twoSquareShips == 2) break createTwoSquareShipsLoop;
 
                         if (shipLength < 2) {
-                            privateField[i][j] = 0;
+                            privateField[column][row] = 0;
                         }
 
                     }
@@ -190,42 +182,42 @@ public class Main {
 
 
 
-    public static void createThreeSquareShip (int[][] privateField, Random rand, int threeSquareShips) {
+    public static void spawnThreeSquareShip(int[][] privateField, Random rand, int threeSquareShips) {
         createThreeSquareShipLoop:
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 7; j++) {
+        for (int column = 0; column < 7; column++) {
+            for (int row = 0; row < 7; row++) {
 
-                if (privateField[i][j] == 0) {
-                    privateField[i][j] = rand.nextInt(2);
+                if (privateField[column][row] == 0) {
+                    privateField[column][row] = rand.nextInt(2);
 
-                    if (privateField[i][j] == 1) {
+                    if (privateField[column][row] == 1) {
 
-                        if (j > 1) {
-                            if (privateField[i][j-1] == 0 && privateField[i][j-2] == 0) {
+                        if (row > 1) {
+                            if (privateField[column][row -1] == 0 && privateField[column][row -2] == 0) {
 
                                 int element = rand.nextInt(2);
-                                privateField[i][j-1] = element;
-                                privateField[i][j-2] = element;
+                                privateField[column][row -1] = element;
+                                privateField[column][row -2] = element;
 
-                                if (privateField[i][j-2] == 1) {
+                                if (privateField[column][row -2] == 1) {
                                     threeSquareShips++;
 
-                                    if (i > 0 && j > 2) privateField[i-1][j-3] = 2;
-                                    if (i > 0) {
-                                        privateField[i-1][j-2] = 2;
-                                        privateField[i-1][j-1] = 2;
-                                        privateField[i-1][j] = 2;
+                                    if (column > 0 && row > 2) privateField[column -1][row -3] = 2;
+                                    if (column > 0) {
+                                        privateField[column -1][row -2] = 2;
+                                        privateField[column -1][row -1] = 2;
+                                        privateField[column -1][row] = 2;
                                     }
-                                    if (i > 0 && j < 6) privateField[i-1][j+1] = 2;
-                                    if (j < 6)          privateField[i][j+1] = 2;
-                                    if (i < 6 && j < 6) privateField[i+1][j+1] = 2;
-                                    if (i < 6) {
-                                        privateField[i+1][j] = 2;
-                                        privateField[i+1][j-1] = 2;
-                                        privateField[i+1][j-2] = 2;
+                                    if (column > 0 && row < 6) privateField[column -1][row +1] = 2;
+                                    if (row < 6)          privateField[column][row +1] = 2;
+                                    if (column < 6 && row < 6) privateField[column +1][row +1] = 2;
+                                    if (column < 6) {
+                                        privateField[column +1][row] = 2;
+                                        privateField[column +1][row -1] = 2;
+                                        privateField[column +1][row -2] = 2;
                                     }
-                                    if (i < 6 && j > 2) privateField[i+1][j-3] = 2;
-                                    if (j > 2)          privateField[i][j-3] = 2;
+                                    if (column < 6 && row > 2) privateField[column +1][row -3] = 2;
+                                    if (row > 2)          privateField[column][row -3] = 2;
 
                                 }
 
@@ -234,31 +226,31 @@ public class Main {
 
                         if (threeSquareShips == 1) break createThreeSquareShipLoop;
 
-                        if (i > 1) {
-                            if (privateField[i-1][j] == 0 && privateField[i-2][j] == 0) {
+                        if (column > 1) {
+                            if (privateField[column -1][row] == 0 && privateField[column -2][row] == 0) {
 
                                 int element = rand.nextInt(2);
-                                privateField[i-1][j] = element;
-                                privateField[i-2][j] = element;
+                                privateField[column -1][row] = element;
+                                privateField[column -2][row] = element;
 
-                                if (privateField[i-2][j] == 1) {
+                                if (privateField[column -2][row] == 1) {
                                     threeSquareShips++;
 
-                                    if (i > 2 && j > 0) privateField[i-3][j-1] = 2;
-                                    if (i > 2)          privateField[i-3][j] = 2;
-                                    if (i > 2 && j < 6) privateField[i-3][j+1] = 2;
-                                    if (j < 6) {
-                                        privateField[i-2][j+1] = 2;
-                                        privateField[i-1][j+1] = 2;
-                                        privateField[i][j+1] = 2;
+                                    if (column > 2 && row > 0) privateField[column -3][row -1] = 2;
+                                    if (column > 2)          privateField[column -3][row] = 2;
+                                    if (column > 2 && row < 6) privateField[column -3][row +1] = 2;
+                                    if (row < 6) {
+                                        privateField[column -2][row +1] = 2;
+                                        privateField[column -1][row +1] = 2;
+                                        privateField[column][row +1] = 2;
                                     }
-                                    if (i < 6 && j < 6) privateField[i+1][j+1] = 2;
-                                    if (i < 6)          privateField[i+1][j] = 2;
-                                    if (i < 6 && j > 0) privateField[i+1][j-1] = 2;
-                                    if (j > 0) {
-                                        privateField[i][j-1] = 2;
-                                        privateField[i-1][j-1] = 2;
-                                        privateField[i-2][j-1] = 2;
+                                    if (column < 6 && row < 6) privateField[column +1][row +1] = 2;
+                                    if (column < 6)          privateField[column +1][row] = 2;
+                                    if (column < 6 && row > 0) privateField[column +1][row -1] = 2;
+                                    if (row > 0) {
+                                        privateField[column][row -1] = 2;
+                                        privateField[column -1][row -1] = 2;
+                                        privateField[column -2][row -1] = 2;
                                     }
                                 }
                             }
@@ -266,73 +258,114 @@ public class Main {
 
                         if (threeSquareShips == 1) break createThreeSquareShipLoop;
 
-                        if (j < 5) {
-                            if (privateField[i][j+1] == 0 && privateField[i][j+2] == 0) {
+                        if (row < 5) {
+                            if (privateField[column][row +1] == 0 && privateField[column][row +2] == 0) {
 
                                 int element = rand.nextInt(2);
-                                privateField[i][j+1] = element;
-                                privateField[i][j+2] = element;
+                                privateField[column][row +1] = element;
+                                privateField[column][row +2] = element;
 
-                                if (privateField[i][j+2] == 1) {
+                                if (privateField[column][row +2] == 1) {
                                     threeSquareShips++;
 
-                                    if (i > 0 && j > 0) privateField[i-1][j-1] = 2;
-                                    if (i > 0) {
-                                        privateField[i-1][j] = 2;
-                                        privateField[i-1][j+1] = 2;
-                                        privateField[i-1][j+2] = 2;
+                                    if (column > 0 && row > 0) privateField[column -1][row -1] = 2;
+                                    if (column > 0) {
+                                        privateField[column -1][row] = 2;
+                                        privateField[column -1][row +1] = 2;
+                                        privateField[column -1][row +2] = 2;
                                     }
-                                    if (i > 0 && j < 4) privateField[i-1][j+3] = 2;
-                                    if (j < 4)          privateField[i][j+3] = 2;
-                                    if (i < 6 && j < 4) privateField[i+1][j+3] = 2;
-                                    if (i < 6) {
-                                        privateField[i+1][j+2] = 2;
-                                        privateField[i+1][j+1] = 2;
-                                        privateField[i+1][j] = 2;
+                                    if (column > 0 && row < 4) privateField[column -1][row +3] = 2;
+                                    if (row < 4)          privateField[column][row +3] = 2;
+                                    if (column < 6 && row < 4) privateField[column +1][row +3] = 2;
+                                    if (column < 6) {
+                                        privateField[column +1][row +2] = 2;
+                                        privateField[column +1][row +1] = 2;
+                                        privateField[column +1][row] = 2;
                                     }
-                                    if (i < 6 && j > 0) privateField[i+1][j-1] = 2;
-                                    if (j > 0)          privateField[i][j-1] = 2;
+                                    if (column < 6 && row > 0) privateField[column +1][row -1] = 2;
+                                    if (row > 0)          privateField[column][row -1] = 2;
                                 }
                             }
                         }
 
                         if (threeSquareShips == 1) break createThreeSquareShipLoop;
 
-                        if (i < 5) {
-                            if (privateField[i+1][j] == 0 && privateField[i+2][j] == 0) {
+                        if (column < 5) {
+                            if (privateField[column +1][row] == 0 && privateField[column +2][row] == 0) {
 
                                 int element = rand.nextInt(2);
-                                privateField[i+1][j] = element;
-                                privateField[i+2][j] = element;
+                                privateField[column +1][row] = element;
+                                privateField[column +2][row] = element;
 
-                                if (privateField[i+2][j] == 1) {
+                                if (privateField[column +2][row] == 1) {
                                     threeSquareShips++;
 
-                                    if (i > 0 && j > 0) privateField[i-1][j-1] = 2;
-                                    if (i > 0)          privateField[i-1][j] = 2;
-                                    if (i > 0 && j < 6) privateField[i-1][j+1] = 2;
-                                    if (j < 6) {
-                                        privateField[i][j+1] = 2;
-                                        privateField[i+1][j+1] = 2;
-                                        privateField[i+2][j+1] = 2;
+                                    if (column > 0 && row > 0) privateField[column -1][row -1] = 2;
+                                    if (column > 0)          privateField[column -1][row] = 2;
+                                    if (column > 0 && row < 6) privateField[column -1][row +1] = 2;
+                                    if (row < 6) {
+                                        privateField[column][row +1] = 2;
+                                        privateField[column +1][row +1] = 2;
+                                        privateField[column +2][row +1] = 2;
                                     }
-                                    if (i < 4 && j < 6) privateField[i+3][j+1] = 2;
-                                    if (i < 4)          privateField[i+3][j] = 2;
-                                    if (i < 4 && j > 0) privateField[i+3][j-1] = 2;
-                                    if (j > 0) {
-                                        privateField[i+2][j-1] = 2;
-                                        privateField[i+1][j-1] = 2;
-                                        privateField[i][j-1] = 2;
+                                    if (column < 4 && row < 6) privateField[column +3][row +1] = 2;
+                                    if (column < 4)          privateField[column +3][row] = 2;
+                                    if (column < 4 && row > 0) privateField[column +3][row -1] = 2;
+                                    if (row > 0) {
+                                        privateField[column +2][row -1] = 2;
+                                        privateField[column +1][row -1] = 2;
+                                        privateField[column][row -1] = 2;
                                     }
                                 }
                             }
                         }
 
                         if (threeSquareShips == 1) break createThreeSquareShipLoop;
+
+                        if (threeSquareShips < 1) {
+                            privateField[column][row] = 0;
+                        }
 
                     }
                 }
             }
+        }
+    }
+
+    public static void randomlySpawnShips (Random rand, int[][] privateField, int oneSquareShips, int twoSquareShips, int threeSquareShips) {
+        int actionsOrder = rand.nextInt(6);
+
+        switch (actionsOrder) {
+            case 0:
+                spawnOneSquareShips(privateField, rand, oneSquareShips);
+                spawnTwoSquareShips(privateField, rand, twoSquareShips);
+                spawnThreeSquareShip(privateField, rand, threeSquareShips);
+                break;
+            case 1:
+                spawnOneSquareShips(privateField, rand, oneSquareShips);
+                spawnThreeSquareShip(privateField, rand, threeSquareShips);
+                spawnTwoSquareShips(privateField, rand, twoSquareShips);
+                break;
+            case 2:
+                spawnTwoSquareShips(privateField, rand, twoSquareShips);
+                spawnOneSquareShips(privateField, rand, oneSquareShips);
+                spawnThreeSquareShip(privateField, rand, threeSquareShips);
+                break;
+            case 3:
+                spawnTwoSquareShips(privateField, rand, twoSquareShips);
+                spawnThreeSquareShip(privateField, rand, threeSquareShips);
+                spawnOneSquareShips(privateField, rand, oneSquareShips);
+                break;
+            case 4:
+                spawnThreeSquareShip(privateField, rand, threeSquareShips);
+                spawnOneSquareShips(privateField, rand, oneSquareShips);
+                spawnTwoSquareShips(privateField, rand, twoSquareShips);
+                break;
+            case 5:
+                spawnThreeSquareShip(privateField, rand, threeSquareShips);
+                spawnTwoSquareShips(privateField, rand, twoSquareShips);
+                spawnOneSquareShips(privateField, rand, oneSquareShips);
+                break;
         }
     }
 }
