@@ -10,7 +10,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         Random rand = new Random();
 
-        int[][] visibleField = new int[7][7];
+        String[][] visibleField = new String[7][7];
         int[][] privateField = new int[7][7];
 
         String [][] designedPrivateField = new String[7][7];
@@ -21,23 +21,59 @@ public class Main {
 
         randomlySpawnShips(rand, privateField, oneSquareShips, twoSquareShips, threeSquareShips);
 
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 7; j++) {
-                if (privateField[i][j] == 1) {
-                    designedPrivateField[i][j] = "\u26f5 ";
+        for (int row = 0; row < 7; row++) {
+            for (int column = 0; column < 7; column++) {
+                if (privateField[row][column] == ship) {
+                    designedPrivateField[row][column] = "\u26f5 "; //ship
                 }
                 else {
-                    designedPrivateField[i][j] = "\ud83c\udf0a ";
+                    designedPrivateField[row][column] = "\ud83c\udf0a "; //water
                 }
             }
         }
 
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 7; j++) {
-                System.out.print(designedPrivateField[i][j]);
+
+
+        for (int row = 0; row < 7; row++) {
+            for (int column = 0; column < 7; column++) {
+                visibleField[row][column] = "\ud83c\udf2b\ufe0f ";
+            }
+        }
+
+        for (int row = 0; row < 7; row++) {
+            for (int column = 0; column < 7; column++) {
+                System.out.print(visibleField[row][column]);
             }
             System.out.println();
         }
+
+
+        int guessRow = 0;
+        int guessColumn = 0;
+
+        while(guessRow < 8 && guessColumn < 8) {
+            guessRow = sc.nextInt();
+            guessColumn = sc.nextInt();
+
+            visibleField[guessRow][guessColumn] = designedPrivateField[guessRow][guessColumn];
+
+            for (int row = 0; row < 7; row++) {
+                for (int column = 0; column < 7; column++) {
+                    System.out.print(visibleField[row][column]);
+                }
+                System.out.println();
+            }
+
+        }
+
+
+
+//        for (int i = 0; i < 7; i++) {
+//            for (int j = 0; j < 7; j++) {
+//                System.out.print(designedPrivateField[i][j]);
+//            }
+//            System.out.println();
+//        }
     }
 
 
@@ -394,4 +430,6 @@ public class Main {
                 break;
         }
     }
+
+
 }
