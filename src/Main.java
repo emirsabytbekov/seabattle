@@ -51,9 +51,9 @@ public class Main {
         int guessRow = 0;
         int guessColumn = 0;
 
-        while(guessRow < 8 && guessColumn < 8) {
-            guessRow = sc.nextInt();
-            guessColumn = sc.nextInt();
+        while(true) {
+            guessRow = sc.nextInt() - 1;
+            guessColumn = sc.nextInt() - 1;
 
             visibleField[guessRow][guessColumn] = designedPrivateField[guessRow][guessColumn];
 
