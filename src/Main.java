@@ -6,6 +6,12 @@ public class Main {
     static final int ship = 1;
     static final int nearShip = 2;
 
+    static final String shipEmoji = "\u26f5 ";
+    static final String waterEmoji = "\ud83c\udf0a ";
+    static final String fogEmoji = "\ud83c\udf2b\ufe0f ";
+    static final String hitEmoji = "\ud83d\udca5 ";
+    static final String sunkEmoji = "\u2620\ufe0f ";
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Random rand = new Random();
@@ -24,10 +30,10 @@ public class Main {
         for (int row = 0; row < 7; row++) {
             for (int column = 0; column < 7; column++) {
                 if (privateField[row][column] == ship) {
-                    designedPrivateField[row][column] = "\u26f5 "; //ship
+                    designedPrivateField[row][column] = shipEmoji;
                 }
                 else {
-                    designedPrivateField[row][column] = "\ud83c\udf0a "; //water
+                    designedPrivateField[row][column] = waterEmoji;
                 }
             }
         }
@@ -36,7 +42,7 @@ public class Main {
 
         for (int row = 0; row < 7; row++) {
             for (int column = 0; column < 7; column++) {
-                visibleField[row][column] = "\ud83c\udf2b\ufe0f ";
+                visibleField[row][column] = fogEmoji;
             }
         }
 
@@ -56,6 +62,32 @@ public class Main {
             guessColumn = sc.nextInt() - 1;
 
             visibleField[guessRow][guessColumn] = designedPrivateField[guessRow][guessColumn];
+
+            if (privateField[guessRow][guessColumn] == ship) {
+
+                int sunk = 0;
+                int hit = 1;
+                int unknownYet = 2;
+                int hitOrSunk = unknownYet;
+
+                boolean isStillAlive = true;
+
+                if (guessRow > 0) {
+                    hitOrSunk = privateField[guessRow - 1][guessColumn] == ship ? hit : unknownYet;
+                }
+                if (hitOrSunk == unknownYet && guessColumn < 6) {
+                    hitOrSunk = privateField[guessRow][guessColumn +1] == ship ? hit : unknownYet;
+                }
+                if (hitOrSunk == unknownYet && guessRow < 6) {
+                    hitOrSunk = privateField[guessRow + 1][guessColumn] == ship ? hit : unknownYet;
+                }
+                if (hitOrSunk == unknownYet && guessColumn > 0) {
+                    hitOrSunk = privateField[guessRow][guessColumn - 1] == ship ? hit : sunk;
+                }
+
+                visibleField[guessRow][guessColumn] = hitOrSunk == hit ? hitEmoji : sunkEmoji;
+
+            }
 
             for (int row = 0; row < 7; row++) {
                 for (int column = 0; column < 7; column++) {
@@ -90,13 +122,13 @@ public class Main {
                         oneSquareShips++;
 
                         if (row > 0 && column > 0) privateField[row -1][column -1] = nearShip;
-                        if (row > 0)          privateField[row -1][column] = nearShip;
+                        if (row > 0)               privateField[row -1][column] = nearShip;
                         if (row > 0 && column < 6) privateField[row -1][column +1] = nearShip;
-                        if (column < 6)          privateField[row][column +1] = nearShip;
+                        if (column < 6)            privateField[row][column +1] = nearShip;
                         if (row < 6 && column < 6) privateField[row +1][column +1] = nearShip;
-                        if (row < 6)          privateField[row +1][column] = nearShip;
+                        if (row < 6)               privateField[row +1][column] = nearShip;
                         if (row < 6 && column > 0) privateField[row +1][column -1] = nearShip;
-                        if (column > 0)          privateField[row][column -1] = nearShip;
+                        if (column > 0)            privateField[row][column -1] = nearShip;
                     }
 
                     if (oneSquareShips == 4) {
@@ -131,15 +163,15 @@ public class Main {
                                     twoSquareShips++;
 
                                     if (row > 0 && column > 1) privateField[row -1][column -2] = nearShip;
-                                    if (row > 0)          privateField[row -1][column -1] = nearShip;
-                                    if (row > 0)          privateField[row -1][column] = nearShip;
+                                    if (row > 0)               privateField[row -1][column -1] = nearShip;
+                                    if (row > 0)               privateField[row -1][column] = nearShip;
                                     if (row > 0 && column < 6) privateField[row -1][column +1] = nearShip;
-                                    if (column < 6)          privateField[row][column +1] = nearShip;
+                                    if (column < 6)            privateField[row][column +1] = nearShip;
                                     if (row < 6 && column < 6) privateField[row +1][column +1] = nearShip;
-                                    if (row < 6)          privateField[row +1][column] = nearShip;
-                                    if (row < 6)          privateField[row +1][column -1] = nearShip;
+                                    if (row < 6)               privateField[row +1][column] = nearShip;
+                                    if (row < 6)               privateField[row +1][column -1] = nearShip;
                                     if (row < 6 && column > 1) privateField[row +1][column -2] = nearShip;
-                                    if (column > 1)          privateField[row][column -2] = nearShip;
+                                    if (column > 1)            privateField[row][column -2] = nearShip;
                                 }
                             }
                         }
@@ -156,15 +188,15 @@ public class Main {
                                         twoSquareShips++;
 
                                         if (row > 1 && column > 0) privateField[row -2][column -1] = nearShip;
-                                        if (row > 1)          privateField[row -2][column] = nearShip;
+                                        if (row > 1)               privateField[row -2][column] = nearShip;
                                         if (row > 1 && column < 6) privateField[row -2][column +1] = nearShip;
-                                        if (column < 6)          privateField[row -1][column +1] = nearShip;
-                                        if (column < 6)          privateField[row][column +1] = nearShip;
+                                        if (column < 6)            privateField[row -1][column +1] = nearShip;
+                                        if (column < 6)            privateField[row][column +1] = nearShip;
                                         if (row < 6 && column < 6) privateField[row +1][column +1] = nearShip;
-                                        if (row < 6)          privateField[row +1][column] = nearShip;
+                                        if (row < 6)               privateField[row +1][column] = nearShip;
                                         if (row < 6 && column > 0) privateField[row +1][column -1] = nearShip;
-                                        if (column > 0)          privateField[row][column -1] = nearShip;
-                                        if (column > 0)          privateField[row -1][column -1] = nearShip;
+                                        if (column > 0)            privateField[row][column -1] = nearShip;
+                                        if (column > 0)            privateField[row -1][column -1] = nearShip;
                                     }
                                 }
                             }
@@ -182,15 +214,15 @@ public class Main {
                                         twoSquareShips++;
 
                                         if (row > 0 && column > 0) privateField[row -1][column -1] = nearShip;
-                                        if (row > 0)          privateField[row -1][column] = nearShip;
-                                        if (row > 0)          privateField[row -1][column +1] = nearShip;
+                                        if (row > 0)               privateField[row -1][column] = nearShip;
+                                        if (row > 0)               privateField[row -1][column +1] = nearShip;
                                         if (row > 0 && column < 5) privateField[row -1][column +2] = nearShip;
-                                        if (column < 5)          privateField[row][column +2] = nearShip;
+                                        if (column < 5)            privateField[row][column +2] = nearShip;
                                         if (row < 6 && column < 5) privateField[row +1][column +2] = nearShip;
-                                        if (row < 6)          privateField[row +1][column +1] = nearShip;
-                                        if (row < 6)          privateField[row +1][column] = nearShip;
+                                        if (row < 6)               privateField[row +1][column +1] = nearShip;
+                                        if (row < 6)               privateField[row +1][column] = nearShip;
                                         if (row < 6 && column > 0) privateField[row +1][column -1] = nearShip;
-                                        if (column > 0)          privateField[row][column -1] = nearShip;
+                                        if (column > 0)            privateField[row][column -1] = nearShip;
                                     }
                                 }
                             }
@@ -208,15 +240,15 @@ public class Main {
                                         twoSquareShips++;
 
                                         if (row > 0 && column > 0) privateField[row -1][column -1] = nearShip;
-                                        if (row > 0)          privateField[row -1][column] = nearShip;
+                                        if (row > 0)               privateField[row -1][column] = nearShip;
                                         if (row > 0 && column < 6) privateField[row -1][column +1] = nearShip;
-                                        if (column < 6)          privateField[row][column +1] = nearShip;
-                                        if (column < 6)          privateField[row +1][column +1] = nearShip;
+                                        if (column < 6)            privateField[row][column +1] = nearShip;
+                                        if (column < 6)            privateField[row +1][column +1] = nearShip;
                                         if (row < 5 && column < 6) privateField[row +2][column +1] = nearShip;
-                                        if (row < 5)          privateField[row +2][column] = nearShip;
+                                        if (row < 5)               privateField[row +2][column] = nearShip;
                                         if (row < 5 && column > 0) privateField[row +2][column -1] = nearShip;
-                                        if (column > 0)          privateField[row +1][column -1] = nearShip;
-                                        if (column > 0)          privateField[row][column -1] = nearShip;
+                                        if (column > 0)            privateField[row +1][column -1] = nearShip;
+                                        if (column > 0)            privateField[row][column -1] = nearShip;
                                     }
                                 }
                             }
@@ -251,8 +283,8 @@ public class Main {
 
                                 boolean isSpawnShip = rand.nextInt(2) == ship;
                                 if (isSpawnShip) {
-                                    privateField[row +1][column] = ship;
-                                    privateField[row +2][column] = ship;
+                                    privateField[row][column - 1] = ship;
+                                    privateField[row][column - 2] = ship;
                                 }
 
                                 if (privateField[row][column -2] == ship) {
@@ -260,20 +292,20 @@ public class Main {
 
                                     if (row > 0 && column > 2) privateField[row -1][column -3] = emptyCell;
                                     if (row > 0) {
-                                        privateField[row -1][column -2] = nearShip;
-                                        privateField[row -1][column -1] = nearShip;
-                                        privateField[row -1][column] = nearShip;
+                                                               privateField[row -1][column -2] = nearShip;
+                                                               privateField[row -1][column -1] = nearShip;
+                                                               privateField[row -1][column] = nearShip;
                                     }
                                     if (row > 0 && column < 6) privateField[row -1][column +1] = nearShip;
-                                    if (column < 6)          privateField[row][column +1] = nearShip;
+                                    if (column < 6)            privateField[row][column +1] = nearShip;
                                     if (row < 6 && column < 6) privateField[row +1][column +1] = nearShip;
                                     if (row < 6) {
-                                        privateField[row +1][column] = nearShip;
-                                        privateField[row +1][column -1] = nearShip;
-                                        privateField[row +1][column -2] = nearShip;
+                                                               privateField[row +1][column] = nearShip;
+                                                               privateField[row +1][column -1] = nearShip;
+                                                               privateField[row +1][column -2] = nearShip;
                                     }
                                     if (row < 6 && column > 2) privateField[row +1][column -3] = nearShip;
-                                    if (column > 2)          privateField[row][column -3] = nearShip;
+                                    if (column > 2)            privateField[row][column -3] = nearShip;
 
                                 }
 
@@ -287,28 +319,28 @@ public class Main {
 
                                 boolean isSpawnShip = rand.nextInt(2) == ship;
                                 if (isSpawnShip) {
-                                    privateField[row +1][column] = ship;
-                                    privateField[row +2][column] = ship;
+                                    privateField[row - 1][column] = ship;
+                                    privateField[row - 2][column] = ship;
                                 }
 
-                                if (privateField[row -2][column] == ship) {
+                                if (privateField[row - 2][column] == ship) {
                                     threeSquareShips++;
 
                                     if (row > 2 && column > 0) privateField[row -3][column -1] = nearShip;
-                                    if (row > 2)          privateField[row -3][column] = nearShip;
+                                    if (row > 2)               privateField[row -3][column] = nearShip;
                                     if (row > 2 && column < 6) privateField[row -3][column +1] = nearShip;
                                     if (column < 6) {
-                                        privateField[row -2][column +1] = nearShip;
-                                        privateField[row -1][column +1] = nearShip;
-                                        privateField[row][column +1] = nearShip;
+                                                               privateField[row -2][column +1] = nearShip;
+                                                               privateField[row -1][column +1] = nearShip;
+                                                               privateField[row][column +1] = nearShip;
                                     }
                                     if (row < 6 && column < 6) privateField[row +1][column +1] = nearShip;
-                                    if (row < 6)          privateField[row +1][column] = nearShip;
+                                    if (row < 6)               privateField[row +1][column] = nearShip;
                                     if (row < 6 && column > 0) privateField[row +1][column -1] = nearShip;
                                     if (column > 0) {
-                                        privateField[row][column -1] = nearShip;
-                                        privateField[row -1][column -1] = nearShip;
-                                        privateField[row -2][column -1] = nearShip;
+                                                               privateField[row][column -1] = nearShip;
+                                                               privateField[row -1][column -1] = nearShip;
+                                                               privateField[row -2][column -1] = nearShip;
                                     }
                                 }
                             }
@@ -321,8 +353,8 @@ public class Main {
 
                                 boolean isSpawnShip = rand.nextInt(2) == ship;
                                 if (isSpawnShip) {
-                                    privateField[row +1][column] = ship;
-                                    privateField[row +2][column] = ship;
+                                    privateField[row][column + 1] = ship;
+                                    privateField[row][column + 2] = ship;
                                 }
 
                                 if (privateField[row][column +2] == ship) {
@@ -330,20 +362,20 @@ public class Main {
 
                                     if (row > 0 && column > 0) privateField[row -1][column -1] = nearShip;
                                     if (row > 0) {
-                                        privateField[row -1][column] = nearShip;
-                                        privateField[row -1][column +1] = nearShip;
-                                        privateField[row -1][column +2] = nearShip;
+                                                               privateField[row -1][column] = nearShip;
+                                                               privateField[row -1][column +1] = nearShip;
+                                                               privateField[row -1][column +2] = nearShip;
                                     }
                                     if (row > 0 && column < 4) privateField[row -1][column +3] = nearShip;
-                                    if (column < 4)          privateField[row][column +3] = nearShip;
+                                    if (column < 4)            privateField[row][column +3] = nearShip;
                                     if (row < 6 && column < 4) privateField[row +1][column +3] = nearShip;
                                     if (row < 6) {
-                                        privateField[row +1][column +2] = nearShip;
-                                        privateField[row +1][column +1] = nearShip;
-                                        privateField[row +1][column] = nearShip;
+                                                               privateField[row +1][column +2] = nearShip;
+                                                               privateField[row +1][column +1] = nearShip;
+                                                               privateField[row +1][column] = nearShip;
                                     }
                                     if (row < 6 && column > 0) privateField[row +1][column -1] = nearShip;
-                                    if (column > 0)          privateField[row][column -1] = nearShip;
+                                    if (column > 0)            privateField[row][column -1] = nearShip;
                                 }
                             }
                         }
@@ -363,20 +395,20 @@ public class Main {
                                     threeSquareShips++;
 
                                     if (row > 0 && column > 0) privateField[row -1][column -1] = nearShip;
-                                    if (row > 0)          privateField[row -1][column] = nearShip;
+                                    if (row > 0)               privateField[row -1][column] = nearShip;
                                     if (row > 0 && column < 6) privateField[row -1][column +1] = nearShip;
                                     if (column < 6) {
-                                        privateField[row][column +1] = nearShip;
-                                        privateField[row +1][column +1] = nearShip;
-                                        privateField[row +2][column +1] = nearShip;
+                                                               privateField[row][column +1] = nearShip;
+                                                               privateField[row +1][column +1] = nearShip;
+                                                               privateField[row +2][column +1] = nearShip;
                                     }
                                     if (row < 4 && column < 6) privateField[row +3][column +1] = nearShip;
-                                    if (row < 4)          privateField[row +3][column] = nearShip;
+                                    if (row < 4)               privateField[row +3][column] = nearShip;
                                     if (row < 4 && column > 0) privateField[row +3][column -1] = nearShip;
                                     if (column > 0) {
-                                        privateField[row +2][column -1] = nearShip;
-                                        privateField[row +1][column -1] = nearShip;
-                                        privateField[row][column -1] = nearShip;
+                                                               privateField[row +2][column -1] = nearShip;
+                                                               privateField[row +1][column -1] = nearShip;
+                                                               privateField[row][column -1] = nearShip;
                                     }
                                 }
                             }

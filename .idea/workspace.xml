@@ -76,11 +76,23 @@
       <updated>1731144135173</updated>
       <workItem from="1731144136426" duration="31783000" />
       <workItem from="1731559634738" duration="3990000" />
-      <workItem from="1732112064358" duration="1819000" />
+      <workItem from="1732112064358" duration="2867000" />
+      <workItem from="1732175913852" duration="642000" />
+      <workItem from="1732197143801" duration="7699000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.ArrayIndexOutOfBoundsException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
