@@ -57,6 +57,9 @@ public class Main {
         int guessRow = 0;
         int guessColumn = 0;
 
+        int previousHitRow = -1;
+        int previousHitColumn = -1;
+
         while(true) {
             guessRow = sc.nextInt() - 1;
             guessColumn = sc.nextInt() - 1;
@@ -69,6 +72,7 @@ public class Main {
                 int hit = 1;
                 int unknownYet = 2;
                 int hitOrSunk = unknownYet;
+
 
                 boolean isStillAlive = true;
 
@@ -86,6 +90,45 @@ public class Main {
                 }
 
                 visibleField[guessRow][guessColumn] = hitOrSunk == hit ? hitEmoji : sunkEmoji;
+
+                if (visibleField[guessRow][guessColumn] == hitEmoji) {
+                    privateField[guessRow][guessColumn] = emptyCell;
+                    previousHitRow = guessRow;
+                    previousHitColumn = guessColumn;
+                }
+
+                if (previousHitRow != -1 || previousHitColumn != -1) {
+                    if (previousHitRow > 0) {
+                        hitOrSunk = privateField[previousHitRow - 1][previousHitColumn] == ship ? hit : unknownYet;
+                    }
+                    if (hitOrSunk == unknownYet && previousHitColumn < 6) {
+                        hitOrSunk = privateField[previousHitRow][previousHitColumn +1] == ship ? hit : unknownYet;
+                    }
+                    if (hitOrSunk == unknownYet && previousHitRow < 6) {
+                        hitOrSunk = privateField[previousHitRow + 1][previousHitColumn] == ship ? hit : unknownYet;
+                    }
+                    if (hitOrSunk == unknownYet && previousHitColumn > 0) {
+                        hitOrSunk = privateField[previousHitRow][previousHitColumn - 1] == ship ? hit : sunk;
+                    }
+
+                    visibleField[previousHitRow][previousHitColumn] = hitOrSunk == hit ? hitEmoji : sunkEmoji;
+
+                    if (visibleField[previousHitRow][previousHitColumn] == hitEmoji) {
+                        privateField[previousHitRow][previousHitColumn] = emptyCell;
+
+                        visibleField[guessRow][guessColumn] = hitEmoji;
+                        previousHitRow = guessRow;
+                        previousHitColumn = guessColumn;
+                    }
+                    else {
+                        visibleField[previousHitRow][previousHitColumn] = sunkEmoji;
+                        visibleField[guessRow][guessColumn] = sunkEmoji;
+                        previousHitRow = -1;
+                        previousHitColumn = -1;
+                    }
+
+
+                }
 
             }
 
