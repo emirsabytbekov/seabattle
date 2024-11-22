@@ -74,8 +74,6 @@ public class Main {
                 int hitOrSunk = unknownYet;
 
 
-                boolean isStillAlive = true;
-
                 if (guessRow > 0) {
                     hitOrSunk = privateField[guessRow - 1][guessColumn] == ship ? hit : unknownYet;
                 }
@@ -90,6 +88,10 @@ public class Main {
                 }
 
                 visibleField[guessRow][guessColumn] = hitOrSunk == hit ? hitEmoji : sunkEmoji;
+
+                if (visibleField[guessRow][guessColumn] == hitEmoji || visibleField[guessRow][guessColumn] == sunkEmoji) {
+                    privateField[guessRow][guessColumn] = emptyCell;
+                }
 
                 if (visibleField[guessRow][guessColumn] == hitEmoji) {
                     privateField[guessRow][guessColumn] = emptyCell;
@@ -115,10 +117,7 @@ public class Main {
 
                     if (visibleField[previousHitRow][previousHitColumn] == hitEmoji) {
                         privateField[previousHitRow][previousHitColumn] = emptyCell;
-
                         visibleField[guessRow][guessColumn] = hitEmoji;
-                        previousHitRow = guessRow;
-                        previousHitColumn = guessColumn;
                     }
                     else {
                         visibleField[previousHitRow][previousHitColumn] = sunkEmoji;
