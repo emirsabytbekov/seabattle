@@ -6,11 +6,21 @@ public class Main {
     static final int ship = 1;
     static final int nearShip = 2;
 
+
     static final String shipEmoji = "\u26f5 ";
     static final String waterEmoji = "\ud83c\udf0a ";
     static final String fogEmoji = "\ud83c\udf2b\ufe0f ";
     static final String hitEmoji = "\ud83d\udca5 ";
     static final String sunkEmoji = "\u2620\ufe0f ";
+
+
+    static int threeSquareShipFirstSquareRow;
+    static int threeSquareShipFirstSquareColumn;
+    static int threeSquareShipSecondSquareRow;
+    static int threeSquareShipSecondSquareColumn;
+    static int threeSquareShipThirdSquareRow;
+    static int threeSquareShipThirdSquareColumn;
+
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -24,6 +34,11 @@ public class Main {
         int oneSquareShips = 0;
         int twoSquareShips = 0;
         int threeSquareShips = 0;
+
+        boolean isHitFirstSquareOfThreeSquareShip = false;
+        boolean isHitSecondSquareOfThreeSquareShip = false;
+        boolean isHitThirdSquareOfThreeSquareShip = false;
+
 
         randomlySpawnShips(rand, privateField, oneSquareShips, twoSquareShips, threeSquareShips);
 
@@ -57,14 +72,26 @@ public class Main {
         int guessRow = 0;
         int guessColumn = 0;
 
-        int previousHitRow = -1;
-        int previousHitColumn = -1;
+        int none = -1;
+        int previousHitRow = none;
+        int previousHitColumn = none;
 
         while(true) {
             guessRow = sc.nextInt() - 1;
             guessColumn = sc.nextInt() - 1;
 
+            if (guessRow == threeSquareShipFirstSquareRow && guessColumn == threeSquareShipFirstSquareColumn) {
+                isHitFirstSquareOfThreeSquareShip = true;
+            }
+            else if (guessRow == threeSquareShipSecondSquareRow && guessColumn == threeSquareShipSecondSquareColumn) {
+                isHitSecondSquareOfThreeSquareShip = true;
+            }
+            else if (guessRow == threeSquareShipThirdSquareRow && guessColumn == threeSquareShipThirdSquareColumn) {
+                isHitThirdSquareOfThreeSquareShip = true;
+            }
+
             visibleField[guessRow][guessColumn] = designedPrivateField[guessRow][guessColumn];
+
 
             if (privateField[guessRow][guessColumn] == ship) {
 
@@ -99,7 +126,7 @@ public class Main {
                     previousHitColumn = guessColumn;
                 }
 
-                if (previousHitRow != -1 || previousHitColumn != -1) {
+                if (previousHitRow != none || previousHitColumn != none) {
                     if (previousHitRow > 0) {
                         hitOrSunk = privateField[previousHitRow - 1][previousHitColumn] == ship ? hit : unknownYet;
                     }
@@ -124,6 +151,19 @@ public class Main {
                         visibleField[guessRow][guessColumn] = sunkEmoji;
                         previousHitRow = -1;
                         previousHitColumn = -1;
+                    }
+
+                    if (isHitFirstSquareOfThreeSquareShip && isHitSecondSquareOfThreeSquareShip && isHitThirdSquareOfThreeSquareShip) {
+                        privateField[threeSquareShipFirstSquareRow][threeSquareShipFirstSquareColumn] = emptyCell;
+                        privateField[threeSquareShipSecondSquareRow][threeSquareShipSecondSquareColumn] = emptyCell;
+                        privateField[threeSquareShipThirdSquareRow][threeSquareShipThirdSquareColumn] = emptyCell;
+
+                        visibleField[threeSquareShipFirstSquareRow][threeSquareShipFirstSquareColumn] = sunkEmoji;
+                        visibleField[threeSquareShipSecondSquareRow][threeSquareShipSecondSquareColumn] = sunkEmoji;
+                        visibleField[threeSquareShipThirdSquareRow][threeSquareShipThirdSquareColumn] = sunkEmoji;
+
+                        previousHitRow = none;
+                        previousHitColumn = none;
                     }
 
 
@@ -327,6 +367,13 @@ public class Main {
                                 if (isSpawnShip) {
                                     privateField[row][column - 1] = ship;
                                     privateField[row][column - 2] = ship;
+
+                                    threeSquareShipFirstSquareRow = row;
+                                    threeSquareShipFirstSquareColumn = column;
+                                    threeSquareShipSecondSquareRow = row;
+                                    threeSquareShipSecondSquareColumn = column - 1;
+                                    threeSquareShipThirdSquareRow = row;
+                                    threeSquareShipThirdSquareColumn = column - 2;
                                 }
 
                                 if (privateField[row][column -2] == ship) {
@@ -363,6 +410,13 @@ public class Main {
                                 if (isSpawnShip) {
                                     privateField[row - 1][column] = ship;
                                     privateField[row - 2][column] = ship;
+
+                                    threeSquareShipFirstSquareRow = row;
+                                    threeSquareShipFirstSquareColumn = column;
+                                    threeSquareShipSecondSquareRow = row - 1;
+                                    threeSquareShipSecondSquareColumn = column;
+                                    threeSquareShipThirdSquareRow = row - 2;
+                                    threeSquareShipThirdSquareColumn = column;
                                 }
 
                                 if (privateField[row - 2][column] == ship) {
@@ -397,6 +451,13 @@ public class Main {
                                 if (isSpawnShip) {
                                     privateField[row][column + 1] = ship;
                                     privateField[row][column + 2] = ship;
+
+                                    threeSquareShipFirstSquareRow = row;
+                                    threeSquareShipFirstSquareColumn = column;
+                                    threeSquareShipSecondSquareRow = row;
+                                    threeSquareShipSecondSquareColumn = column + 1;
+                                    threeSquareShipThirdSquareRow = row;
+                                    threeSquareShipThirdSquareColumn = column + 2;
                                 }
 
                                 if (privateField[row][column +2] == ship) {
@@ -431,6 +492,13 @@ public class Main {
                                 if (isSpawnShip) {
                                     privateField[row +1][column] = ship;
                                     privateField[row +2][column] = ship;
+
+                                    threeSquareShipFirstSquareRow = row;
+                                    threeSquareShipFirstSquareColumn = column;
+                                    threeSquareShipSecondSquareRow = row + 1;
+                                    threeSquareShipSecondSquareColumn = column;
+                                    threeSquareShipThirdSquareRow = row + 2;
+                                    threeSquareShipThirdSquareColumn = column;
                                 }
 
                                 if (privateField[row +2][column] == ship) {
