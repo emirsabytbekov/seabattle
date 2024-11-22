@@ -90,7 +90,9 @@ public class Main {
                 isHitThirdSquareOfThreeSquareShip = true;
             }
 
-            visibleField[guessRow][guessColumn] = designedPrivateField[guessRow][guessColumn];
+            if (visibleField[guessRow][guessColumn] != hitEmoji && visibleField[guessRow][guessColumn] != sunkEmoji) {
+                visibleField[guessRow][guessColumn] = waterEmoji;
+            }
 
 
             if (privateField[guessRow][guessColumn] == ship) {
