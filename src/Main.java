@@ -27,153 +27,172 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         Random rand = new Random();
 
-        String[][] visibleField = new String[7][7];
-        int[][] privateField = new int[7][7];
-
-        String [][] designedPrivateField = new String[7][7];
-
-        int oneSquareShips = 0;
-        int twoSquareShips = 0;
-        int threeSquareShips = 0;
-
-        boolean isHitFirstSquareOfThreeSquareShip = false;
-        boolean isHitSecondSquareOfThreeSquareShip = false;
-        boolean isHitThirdSquareOfThreeSquareShip = false;
 
 
-        randomlySpawnShips(rand, privateField, oneSquareShips, twoSquareShips, threeSquareShips);
+        boolean isPlayAgain = true;
 
-        oneSquareShips = 4;
-        twoSquareShips = 2;
-        threeSquareShips = 1;
+        while (isPlayAgain) {
 
+            String[][] visibleField = new String[7][7];
+            int[][] privateField = new int[7][7];
 
-        fillDesignedPrivateField(privateField, designedPrivateField);
-
-        fillVisibleField(visibleField);
-
-        printVisibleField(visibleField);
+            String [][] designedPrivateField = new String[7][7];
 
 
-        int guessRow = 0;
-        int guessColumn = 0;
+            int oneSquareShips = 0;
+            int twoSquareShips = 0;
+            int threeSquareShips = 0;
 
-        int none = -1;
-        int previousHitRow = none;
-        int previousHitColumn = none;
-
-        while(oneSquareShips > 0 || twoSquareShips > 0 || threeSquareShips > 0) {
-
-            clearScreen();
-
-            guessRow = sc.nextInt() - 1;
-            guessColumn = sc.nextInt() - 1;
-
-            if (guessRow == threeSquareShipFirstSquareRow && guessColumn == threeSquareShipFirstSquareColumn) {
-                isHitFirstSquareOfThreeSquareShip = true;
-            }
-            else if (guessRow == threeSquareShipSecondSquareRow && guessColumn == threeSquareShipSecondSquareColumn) {
-                isHitSecondSquareOfThreeSquareShip = true;
-            }
-            else if (guessRow == threeSquareShipThirdSquareRow && guessColumn == threeSquareShipThirdSquareColumn) {
-                isHitThirdSquareOfThreeSquareShip = true;
-            }
-
-            if (!Objects.equals(visibleField[guessRow][guessColumn], hitEmoji) && !Objects.equals(visibleField[guessRow][guessColumn], sunkEmoji)) {
-                visibleField[guessRow][guessColumn] = waterEmoji;
-            }
+            boolean isHitFirstSquareOfThreeSquareShip = false;
+            boolean isHitSecondSquareOfThreeSquareShip = false;
+            boolean isHitThirdSquareOfThreeSquareShip = false;
 
 
-            if (privateField[guessRow][guessColumn] == ship) {
+            randomlySpawnShips(rand, privateField, oneSquareShips, twoSquareShips, threeSquareShips);
 
-                int sunk = 0;
-                int hit = 1;
-                int unknownYet = 2;
-                int hitOrSunk = unknownYet;
+            oneSquareShips = 4;
+            twoSquareShips = 2;
+            threeSquareShips = 1;
 
 
-                if (guessRow > 0) {
-                    hitOrSunk = privateField[guessRow - 1][guessColumn] == ship ? hit : unknownYet;
+            fillDesignedPrivateField(privateField, designedPrivateField);
+
+            fillVisibleField(visibleField);
+
+            printVisibleField(visibleField);
+            int guessRow = 0;
+            int guessColumn = 0;
+
+            int none = -1;
+            int previousHitRow = none;
+            int previousHitColumn = none;
+
+            int shotsNumber = 0;
+
+            while(oneSquareShips > 0 || twoSquareShips > 0 || threeSquareShips > 0) {
+
+                clearScreen();
+
+                guessRow = sc.nextInt() - 1;
+                guessColumn = sc.nextInt() - 1;
+
+                shotsNumber++;
+
+                if (guessRow == threeSquareShipFirstSquareRow && guessColumn == threeSquareShipFirstSquareColumn) {
+                    isHitFirstSquareOfThreeSquareShip = true;
                 }
-                if (hitOrSunk == unknownYet && guessColumn < 6) {
-                    hitOrSunk = privateField[guessRow][guessColumn +1] == ship ? hit : unknownYet;
+                else if (guessRow == threeSquareShipSecondSquareRow && guessColumn == threeSquareShipSecondSquareColumn) {
+                    isHitSecondSquareOfThreeSquareShip = true;
                 }
-                if (hitOrSunk == unknownYet && guessRow < 6) {
-                    hitOrSunk = privateField[guessRow + 1][guessColumn] == ship ? hit : unknownYet;
-                }
-                if (hitOrSunk == unknownYet && guessColumn > 0) {
-                    hitOrSunk = privateField[guessRow][guessColumn - 1] == ship ? hit : sunk;
+                else if (guessRow == threeSquareShipThirdSquareRow && guessColumn == threeSquareShipThirdSquareColumn) {
+                    isHitThirdSquareOfThreeSquareShip = true;
                 }
 
-                visibleField[guessRow][guessColumn] = hitOrSunk == hit ? hitEmoji : sunkEmoji;
-
-                if (Objects.equals(visibleField[guessRow][guessColumn], hitEmoji) || Objects.equals(visibleField[guessRow][guessColumn], sunkEmoji)) {
-                    privateField[guessRow][guessColumn] = emptyCell;
+                if (!Objects.equals(visibleField[guessRow][guessColumn], hitEmoji) && !Objects.equals(visibleField[guessRow][guessColumn], sunkEmoji)) {
+                    visibleField[guessRow][guessColumn] = waterEmoji;
                 }
 
-                if (Objects.equals(visibleField[guessRow][guessColumn], hitEmoji)) {
-                    previousHitRow = guessRow;
-                    previousHitColumn = guessColumn;
-                }
-                else if (Objects.equals(visibleField[guessRow][guessColumn], sunkEmoji) && previousHitRow == -1) {
-                    oneSquareShips--;
-                }
 
-                if (previousHitRow != none || previousHitColumn != none) {
-                    if (previousHitRow > 0) {
-                        hitOrSunk = privateField[previousHitRow - 1][previousHitColumn] == ship ? hit : unknownYet;
+                if (privateField[guessRow][guessColumn] == ship) {
+
+                    int sunk = 0;
+                    int hit = 1;
+                    int unknownYet = 2;
+                    int hitOrSunk = unknownYet;
+
+
+                    if (guessRow > 0) {
+                        hitOrSunk = privateField[guessRow - 1][guessColumn] == ship ? hit : unknownYet;
                     }
-                    if (hitOrSunk == unknownYet && previousHitColumn < 6) {
-                        hitOrSunk = privateField[previousHitRow][previousHitColumn + 1] == ship ? hit : unknownYet;
+                    if (hitOrSunk == unknownYet && guessColumn < 6) {
+                        hitOrSunk = privateField[guessRow][guessColumn +1] == ship ? hit : unknownYet;
                     }
-                    if (hitOrSunk == unknownYet && previousHitRow < 6) {
-                        hitOrSunk = privateField[previousHitRow + 1][previousHitColumn] == ship ? hit : unknownYet;
+                    if (hitOrSunk == unknownYet && guessRow < 6) {
+                        hitOrSunk = privateField[guessRow + 1][guessColumn] == ship ? hit : unknownYet;
                     }
-                    if (hitOrSunk == unknownYet && previousHitColumn > 0) {
-                        hitOrSunk = privateField[previousHitRow][previousHitColumn - 1] == ship ? hit : sunk;
+                    if (hitOrSunk == unknownYet && guessColumn > 0) {
+                        hitOrSunk = privateField[guessRow][guessColumn - 1] == ship ? hit : sunk;
                     }
 
-                    visibleField[previousHitRow][previousHitColumn] = hitOrSunk == hit ? hitEmoji : sunkEmoji;
+                    visibleField[guessRow][guessColumn] = hitOrSunk == hit ? hitEmoji : sunkEmoji;
 
-                    if (Objects.equals(visibleField[previousHitRow][previousHitColumn], hitEmoji)) {
-                        privateField[previousHitRow][previousHitColumn] = emptyCell;
-                        visibleField[guessRow][guessColumn] = hitEmoji;
-                    }
-                    else {
-                        visibleField[previousHitRow][previousHitColumn] = sunkEmoji;
-                        visibleField[guessRow][guessColumn] = sunkEmoji;
-
-                        if ( !(guessRow == threeSquareShipFirstSquareRow && guessColumn == threeSquareShipFirstSquareColumn) && !(guessRow == threeSquareShipSecondSquareRow && guessColumn == threeSquareShipSecondSquareColumn) && !(guessRow == threeSquareShipThirdSquareRow && guessColumn == threeSquareShipThirdSquareColumn) ) twoSquareShips--;
-
-                        previousHitRow = none;
-                        previousHitColumn = none;
+                    if (Objects.equals(visibleField[guessRow][guessColumn], hitEmoji) || Objects.equals(visibleField[guessRow][guessColumn], sunkEmoji)) {
+                        privateField[guessRow][guessColumn] = emptyCell;
                     }
 
-                    if (threeSquareShips > 0) {
-                        if (isHitFirstSquareOfThreeSquareShip && isHitSecondSquareOfThreeSquareShip && isHitThirdSquareOfThreeSquareShip) {
-                            privateField[threeSquareShipFirstSquareRow][threeSquareShipFirstSquareColumn] = emptyCell;
-                            privateField[threeSquareShipSecondSquareRow][threeSquareShipSecondSquareColumn] = emptyCell;
-                            privateField[threeSquareShipThirdSquareRow][threeSquareShipThirdSquareColumn] = emptyCell;
+                    if (Objects.equals(visibleField[guessRow][guessColumn], hitEmoji)) {
+                        previousHitRow = guessRow;
+                        previousHitColumn = guessColumn;
+                    }
+                    else if (Objects.equals(visibleField[guessRow][guessColumn], sunkEmoji) && previousHitRow == -1) {
+                        oneSquareShips--;
+                    }
 
-                            visibleField[threeSquareShipFirstSquareRow][threeSquareShipFirstSquareColumn] = sunkEmoji;
-                            visibleField[threeSquareShipSecondSquareRow][threeSquareShipSecondSquareColumn] = sunkEmoji;
-                            visibleField[threeSquareShipThirdSquareRow][threeSquareShipThirdSquareColumn] = sunkEmoji;
+                    if (previousHitRow != none || previousHitColumn != none) {
+                        if (previousHitRow > 0) {
+                            hitOrSunk = privateField[previousHitRow - 1][previousHitColumn] == ship ? hit : unknownYet;
+                        }
+                        if (hitOrSunk == unknownYet && previousHitColumn < 6) {
+                            hitOrSunk = privateField[previousHitRow][previousHitColumn + 1] == ship ? hit : unknownYet;
+                        }
+                        if (hitOrSunk == unknownYet && previousHitRow < 6) {
+                            hitOrSunk = privateField[previousHitRow + 1][previousHitColumn] == ship ? hit : unknownYet;
+                        }
+                        if (hitOrSunk == unknownYet && previousHitColumn > 0) {
+                            hitOrSunk = privateField[previousHitRow][previousHitColumn - 1] == ship ? hit : sunk;
+                        }
 
-                            threeSquareShips--;
+                        visibleField[previousHitRow][previousHitColumn] = hitOrSunk == hit ? hitEmoji : sunkEmoji;
+
+                        if (Objects.equals(visibleField[previousHitRow][previousHitColumn], hitEmoji)) {
+                            privateField[previousHitRow][previousHitColumn] = emptyCell;
+                            visibleField[guessRow][guessColumn] = hitEmoji;
+                        }
+                        else {
+                            visibleField[previousHitRow][previousHitColumn] = sunkEmoji;
+                            visibleField[guessRow][guessColumn] = sunkEmoji;
+
+                            if ( !(guessRow == threeSquareShipFirstSquareRow && guessColumn == threeSquareShipFirstSquareColumn) && !(guessRow == threeSquareShipSecondSquareRow && guessColumn == threeSquareShipSecondSquareColumn) && !(guessRow == threeSquareShipThirdSquareRow && guessColumn == threeSquareShipThirdSquareColumn) ) twoSquareShips--;
 
                             previousHitRow = none;
                             previousHitColumn = none;
                         }
-                    }
 
+                        if (threeSquareShips > 0) {
+                            if (isHitFirstSquareOfThreeSquareShip && isHitSecondSquareOfThreeSquareShip && isHitThirdSquareOfThreeSquareShip) {
+                                privateField[threeSquareShipFirstSquareRow][threeSquareShipFirstSquareColumn] = emptyCell;
+                                privateField[threeSquareShipSecondSquareRow][threeSquareShipSecondSquareColumn] = emptyCell;
+                                privateField[threeSquareShipThirdSquareRow][threeSquareShipThirdSquareColumn] = emptyCell;
+
+                                visibleField[threeSquareShipFirstSquareRow][threeSquareShipFirstSquareColumn] = sunkEmoji;
+                                visibleField[threeSquareShipSecondSquareRow][threeSquareShipSecondSquareColumn] = sunkEmoji;
+                                visibleField[threeSquareShipThirdSquareRow][threeSquareShipThirdSquareColumn] = sunkEmoji;
+
+                                threeSquareShips--;
+
+                                previousHitRow = none;
+                                previousHitColumn = none;
+                            }
+                        }
+
+
+                    }
 
                 }
 
+                printVisibleField(visibleField);
+
+                if (oneSquareShips == 0 && twoSquareShips == 0 && threeSquareShips == 0) {
+                    System.out.println("YOU WON!");
+                    System.out.printf("You have made %d shots.\n", shotsNumber);
+                    System.out.println("Want to play again? If yes, enter 'yes': ");
+                    sc.nextLine();
+                    isPlayAgain = Objects.equals(sc.nextLine(), "yes");
+                }
             }
-
-            printVisibleField(visibleField);
-
         }
+
+
     }
 
 
