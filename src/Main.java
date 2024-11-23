@@ -63,6 +63,9 @@ public class Main {
         int previousHitColumn = none;
 
         while(oneSquareShips > 0 || twoSquareShips > 0 || threeSquareShips > 0) {
+
+            clearScreen();
+
             guessRow = sc.nextInt() - 1;
             guessColumn = sc.nextInt() - 1;
 
@@ -584,6 +587,11 @@ public class Main {
             }
             System.out.println();
         }
+    }
+
+    public static void clearScreen () {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 
 
