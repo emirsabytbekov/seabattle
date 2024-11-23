@@ -27,6 +27,9 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         Random rand = new Random();
 
+        System.out.print("Enter your nickname: ");
+        String nickname = sc.nextLine();
+
         int finalShotsNumber = 0;
 
         boolean isPlayAgain = true;
@@ -75,6 +78,13 @@ public class Main {
 
                 guessRow = sc.nextInt() - 1;
                 guessColumn = sc.nextInt() - 1;
+
+                if (guessRow < 0 || guessRow > 6 || guessColumn < 0 || guessColumn > 6) {
+                    System.out.println("Invalid row or column. Please try again.");
+
+                    guessRow = sc.nextInt() - 1;
+                    guessColumn = sc.nextInt() - 1;
+                }
 
                 shotsNumber++;
 
@@ -189,13 +199,15 @@ public class Main {
                     System.out.println("Want to play again? If yes, enter 'yes': ");
                     sc.nextLine();
                     isPlayAgain = Objects.equals(sc.nextLine(), "yes");
+
+                    clearScreen();
                 }
             }
 
 
         }
 
-        printTopPlayersList(finalShotsNumber);
+        printTopPlayersList(finalShotsNumber, nickname);
 
 
     }
@@ -624,27 +636,31 @@ public class Main {
         System.out.flush();
     }
 
-    public static void printTopPlayersList (int finalShotsNumber) {
+    public static void printTopPlayersList (int finalShotsNumber, String nickname) {
         System.out.println("\n\nWe congratulate you with winning seabattle!");
-        System.out.println("You made it to the top players list.");
+        System.out.println("You have made it to the top players list!\n");
         System.out.println("TOP PLAYERS OF ALL TIME:");
 
         if (finalShotsNumber <= 15) {
-            System.out.printf("1. You (%d shots)\n", finalShotsNumber);
+            System.out.printf("1. %s (%d shots)\n", nickname, finalShotsNumber);
             System.out.println("2. Mr.Emirchik (15 shots)");
             System.out.println("3. Emir Sabytbekov (20 shots)");
         }
         else if (finalShotsNumber <= 20) {
             System.out.println("1. Mr.Emirchik (15 shots)");
-            System.out.printf("2. You (%d shots)\n", finalShotsNumber);
+            System.out.printf("2. %s (%d shots)\n", nickname, finalShotsNumber);
             System.out.println("3. Emir Sabytbekov (20 shots)");
         }
         else {
             System.out.println("1. Mr.Emirchik (15 shots)");
             System.out.println("2. Emir Sabytbekov (20 shots)");
-            System.out.printf("3. You (%d shots)\n", finalShotsNumber);
+            System.out.printf("3. %s (%d shots)\n", nickname, finalShotsNumber);
         }
     }
+
+
+
+
 
 
 }
