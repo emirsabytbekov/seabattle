@@ -27,7 +27,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         Random rand = new Random();
 
-
+        int finalShotsNumber = 0;
 
         boolean isPlayAgain = true;
 
@@ -185,15 +185,44 @@ public class Main {
                 if (oneSquareShips == 0 && twoSquareShips == 0 && threeSquareShips == 0) {
                     System.out.println("YOU WON!");
                     System.out.printf("You have made %d shots.\n", shotsNumber);
+                    finalShotsNumber = shotsNumber;
                     System.out.println("Want to play again? If yes, enter 'yes': ");
                     sc.nextLine();
                     isPlayAgain = Objects.equals(sc.nextLine(), "yes");
                 }
             }
+
+
+        }
+
+        System.out.println("\n\nWe congratulate you with winning seabattle!");
+        System.out.println("You made it to the top players list.");
+        System.out.println("TOP PLAYERS OF ALL TIME:");
+
+        if (finalShotsNumber <= 15) {
+            System.out.printf("1. You (%d shots)\n", finalShotsNumber);
+            System.out.println("2. Mr.Emirchik (15 shots)");
+            System.out.println("3. Emir Sabytbekov (20 shots)");
+        }
+        else if (finalShotsNumber <= 20) {
+            System.out.println("1. Mr.Emirchik (15 shots)");
+            System.out.printf("2. You (%d shots)\n", finalShotsNumber);
+            System.out.println("3. Emir Sabytbekov (20 shots)");
+        }
+        else {
+            System.out.println("1. Mr.Emirchik (15 shots)");
+            System.out.println("2. Emir Sabytbekov (20 shots)");
+            System.out.printf("3. You (%d shots)\n", finalShotsNumber);
         }
 
 
     }
+
+
+
+
+
+
 
 
     public static void spawnOneSquareShips(int[][] privateField, Random rand, int oneSquareShips) {
