@@ -195,25 +195,7 @@ public class Main {
 
         }
 
-        System.out.println("\n\nWe congratulate you with winning seabattle!");
-        System.out.println("You made it to the top players list.");
-        System.out.println("TOP PLAYERS OF ALL TIME:");
-
-        if (finalShotsNumber <= 15) {
-            System.out.printf("1. You (%d shots)\n", finalShotsNumber);
-            System.out.println("2. Mr.Emirchik (15 shots)");
-            System.out.println("3. Emir Sabytbekov (20 shots)");
-        }
-        else if (finalShotsNumber <= 20) {
-            System.out.println("1. Mr.Emirchik (15 shots)");
-            System.out.printf("2. You (%d shots)\n", finalShotsNumber);
-            System.out.println("3. Emir Sabytbekov (20 shots)");
-        }
-        else {
-            System.out.println("1. Mr.Emirchik (15 shots)");
-            System.out.println("2. Emir Sabytbekov (20 shots)");
-            System.out.printf("3. You (%d shots)\n", finalShotsNumber);
-        }
+        printTopPlayersList(finalShotsNumber);
 
 
     }
@@ -640,6 +622,28 @@ public class Main {
     public static void clearScreen () {
         System.out.print("\033[H\033[2J");
         System.out.flush();
+    }
+
+    public static void printTopPlayersList (int finalShotsNumber) {
+        System.out.println("\n\nWe congratulate you with winning seabattle!");
+        System.out.println("You made it to the top players list.");
+        System.out.println("TOP PLAYERS OF ALL TIME:");
+
+        if (finalShotsNumber <= 15) {
+            System.out.printf("1. You (%d shots)\n", finalShotsNumber);
+            System.out.println("2. Mr.Emirchik (15 shots)");
+            System.out.println("3. Emir Sabytbekov (20 shots)");
+        }
+        else if (finalShotsNumber <= 20) {
+            System.out.println("1. Mr.Emirchik (15 shots)");
+            System.out.printf("2. You (%d shots)\n", finalShotsNumber);
+            System.out.println("3. Emir Sabytbekov (20 shots)");
+        }
+        else {
+            System.out.println("1. Mr.Emirchik (15 shots)");
+            System.out.println("2. Emir Sabytbekov (20 shots)");
+            System.out.printf("3. You (%d shots)\n", finalShotsNumber);
+        }
     }
 
 
