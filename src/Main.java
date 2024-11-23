@@ -1,3 +1,4 @@
+import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 public class Main {
@@ -42,6 +43,11 @@ public class Main {
 
         randomlySpawnShips(rand, privateField, oneSquareShips, twoSquareShips, threeSquareShips);
 
+        oneSquareShips = 4;
+        twoSquareShips = 2;
+        threeSquareShips = 1;
+
+
         fillDesignedPrivateField(privateField, designedPrivateField);
 
         fillVisibleField(visibleField);
@@ -56,7 +62,7 @@ public class Main {
         int previousHitRow = none;
         int previousHitColumn = none;
 
-        while(true) {
+        while(oneSquareShips > 0 || twoSquareShips > 0 || threeSquareShips > 0) {
             guessRow = sc.nextInt() - 1;
             guessColumn = sc.nextInt() - 1;
 
@@ -70,7 +76,7 @@ public class Main {
                 isHitThirdSquareOfThreeSquareShip = true;
             }
 
-            if (visibleField[guessRow][guessColumn] != hitEmoji && visibleField[guessRow][guessColumn] != sunkEmoji) {
+            if (!Objects.equals(visibleField[guessRow][guessColumn], hitEmoji) && !Objects.equals(visibleField[guessRow][guessColumn], sunkEmoji)) {
                 visibleField[guessRow][guessColumn] = waterEmoji;
             }
 
@@ -98,13 +104,16 @@ public class Main {
 
                 visibleField[guessRow][guessColumn] = hitOrSunk == hit ? hitEmoji : sunkEmoji;
 
-                if (visibleField[guessRow][guessColumn] == hitEmoji || visibleField[guessRow][guessColumn] == sunkEmoji) {
+                if (Objects.equals(visibleField[guessRow][guessColumn], hitEmoji) || Objects.equals(visibleField[guessRow][guessColumn], sunkEmoji)) {
                     privateField[guessRow][guessColumn] = emptyCell;
                 }
 
-                if (visibleField[guessRow][guessColumn] == hitEmoji) {
+                if (Objects.equals(visibleField[guessRow][guessColumn], hitEmoji)) {
                     previousHitRow = guessRow;
                     previousHitColumn = guessColumn;
+                }
+                else if (Objects.equals(visibleField[guessRow][guessColumn], sunkEmoji) && previousHitRow == -1) {
+                    oneSquareShips--;
                 }
 
                 if (previousHitRow != none || previousHitColumn != none) {
@@ -123,28 +132,35 @@ public class Main {
 
                     visibleField[previousHitRow][previousHitColumn] = hitOrSunk == hit ? hitEmoji : sunkEmoji;
 
-                    if (visibleField[previousHitRow][previousHitColumn] == hitEmoji) {
+                    if (Objects.equals(visibleField[previousHitRow][previousHitColumn], hitEmoji)) {
                         privateField[previousHitRow][previousHitColumn] = emptyCell;
                         visibleField[guessRow][guessColumn] = hitEmoji;
                     }
                     else {
                         visibleField[previousHitRow][previousHitColumn] = sunkEmoji;
                         visibleField[guessRow][guessColumn] = sunkEmoji;
+
+                        if ( !(guessRow == threeSquareShipFirstSquareRow && guessColumn == threeSquareShipFirstSquareColumn) && !(guessRow == threeSquareShipSecondSquareRow && guessColumn == threeSquareShipSecondSquareColumn) && !(guessRow == threeSquareShipThirdSquareRow && guessColumn == threeSquareShipThirdSquareColumn) ) twoSquareShips--;
+
                         previousHitRow = none;
                         previousHitColumn = none;
                     }
 
-                    if (isHitFirstSquareOfThreeSquareShip && isHitSecondSquareOfThreeSquareShip && isHitThirdSquareOfThreeSquareShip) {
-                        privateField[threeSquareShipFirstSquareRow][threeSquareShipFirstSquareColumn] = emptyCell;
-                        privateField[threeSquareShipSecondSquareRow][threeSquareShipSecondSquareColumn] = emptyCell;
-                        privateField[threeSquareShipThirdSquareRow][threeSquareShipThirdSquareColumn] = emptyCell;
+                    if (threeSquareShips > 0) {
+                        if (isHitFirstSquareOfThreeSquareShip && isHitSecondSquareOfThreeSquareShip && isHitThirdSquareOfThreeSquareShip) {
+                            privateField[threeSquareShipFirstSquareRow][threeSquareShipFirstSquareColumn] = emptyCell;
+                            privateField[threeSquareShipSecondSquareRow][threeSquareShipSecondSquareColumn] = emptyCell;
+                            privateField[threeSquareShipThirdSquareRow][threeSquareShipThirdSquareColumn] = emptyCell;
 
-                        visibleField[threeSquareShipFirstSquareRow][threeSquareShipFirstSquareColumn] = sunkEmoji;
-                        visibleField[threeSquareShipSecondSquareRow][threeSquareShipSecondSquareColumn] = sunkEmoji;
-                        visibleField[threeSquareShipThirdSquareRow][threeSquareShipThirdSquareColumn] = sunkEmoji;
+                            visibleField[threeSquareShipFirstSquareRow][threeSquareShipFirstSquareColumn] = sunkEmoji;
+                            visibleField[threeSquareShipSecondSquareRow][threeSquareShipSecondSquareColumn] = sunkEmoji;
+                            visibleField[threeSquareShipThirdSquareRow][threeSquareShipThirdSquareColumn] = sunkEmoji;
 
-                        previousHitRow = none;
-                        previousHitColumn = none;
+                            threeSquareShips--;
+
+                            previousHitRow = none;
+                            previousHitColumn = none;
+                        }
                     }
 
 
