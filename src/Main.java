@@ -42,31 +42,11 @@ public class Main {
 
         randomlySpawnShips(rand, privateField, oneSquareShips, twoSquareShips, threeSquareShips);
 
-        for (int row = 0; row < 7; row++) {
-            for (int column = 0; column < 7; column++) {
-                if (privateField[row][column] == ship) {
-                    designedPrivateField[row][column] = shipEmoji;
-                }
-                else {
-                    designedPrivateField[row][column] = waterEmoji;
-                }
-            }
-        }
+        fillDesignedPrivateField(privateField, designedPrivateField);
 
+        fillVisibleField(visibleField);
 
-
-        for (int row = 0; row < 7; row++) {
-            for (int column = 0; column < 7; column++) {
-                visibleField[row][column] = fogEmoji;
-            }
-        }
-
-        for (int row = 0; row < 7; row++) {
-            for (int column = 0; column < 7; column++) {
-                System.out.print(visibleField[row][column]);
-            }
-            System.out.println();
-        }
+        printVisibleField(visibleField);
 
 
         int guessRow = 0;
@@ -123,7 +103,6 @@ public class Main {
                 }
 
                 if (visibleField[guessRow][guessColumn] == hitEmoji) {
-                    privateField[guessRow][guessColumn] = emptyCell;
                     previousHitRow = guessRow;
                     previousHitColumn = guessColumn;
                 }
@@ -133,7 +112,7 @@ public class Main {
                         hitOrSunk = privateField[previousHitRow - 1][previousHitColumn] == ship ? hit : unknownYet;
                     }
                     if (hitOrSunk == unknownYet && previousHitColumn < 6) {
-                        hitOrSunk = privateField[previousHitRow][previousHitColumn +1] == ship ? hit : unknownYet;
+                        hitOrSunk = privateField[previousHitRow][previousHitColumn + 1] == ship ? hit : unknownYet;
                     }
                     if (hitOrSunk == unknownYet && previousHitRow < 6) {
                         hitOrSunk = privateField[previousHitRow + 1][previousHitColumn] == ship ? hit : unknownYet;
@@ -151,8 +130,8 @@ public class Main {
                     else {
                         visibleField[previousHitRow][previousHitColumn] = sunkEmoji;
                         visibleField[guessRow][guessColumn] = sunkEmoji;
-                        previousHitRow = -1;
-                        previousHitColumn = -1;
+                        previousHitRow = none;
+                        previousHitColumn = none;
                     }
 
                     if (isHitFirstSquareOfThreeSquareShip && isHitSecondSquareOfThreeSquareShip && isHitThirdSquareOfThreeSquareShip) {
@@ -173,23 +152,9 @@ public class Main {
 
             }
 
-            for (int row = 0; row < 7; row++) {
-                for (int column = 0; column < 7; column++) {
-                    System.out.print(visibleField[row][column]);
-                }
-                System.out.println();
-            }
+            printVisibleField(visibleField);
 
         }
-
-
-
-//        for (int i = 0; i < 7; i++) {
-//            for (int j = 0; j < 7; j++) {
-//                System.out.print(designedPrivateField[i][j]);
-//            }
-//            System.out.println();
-//        }
     }
 
 
@@ -572,6 +537,36 @@ public class Main {
                 spawnTwoSquareShips(privateField, rand, twoSquareShips);
                 spawnOneSquareShips(privateField, rand, oneSquareShips);
                 break;
+        }
+    }
+
+    public static void fillDesignedPrivateField (int[][] privateField, String[][] designedPrivateField) {
+        for (int row = 0; row < 7; row++) {
+            for (int column = 0; column < 7; column++) {
+                if (privateField[row][column] == ship) {
+                    designedPrivateField[row][column] = shipEmoji;
+                }
+                else {
+                    designedPrivateField[row][column] = waterEmoji;
+                }
+            }
+        }
+    }
+
+    public static void fillVisibleField (String[][] visibleField) {
+        for (int row = 0; row < 7; row++) {
+            for (int column = 0; column < 7; column++) {
+                visibleField[row][column] = fogEmoji;
+            }
+        }
+    }
+
+    public static void printVisibleField (String[][] visibleField) {
+        for (int row = 0; row < 7; row++) {
+            for (int column = 0; column < 7; column++) {
+                System.out.print(visibleField[row][column]);
+            }
+            System.out.println();
         }
     }
 
